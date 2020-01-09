@@ -9,7 +9,13 @@ public class EnemyLadja : MonoBehaviour
 	public Rigidbody rb;
 
 	[SerializeField]
-	public float velocity = 50;
+	public double maxVelocity = 100;
+
+	[SerializeField]
+	public double turnRate = 1;
+
+	[SerializeField]
+	public float accelerationRate = 3.0f;
 
 
 	public GameObject playerShip;
@@ -17,9 +23,8 @@ public class EnemyLadja : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
-
-		playerShip = GameObject.FindWithTag("Player");
+		rb = GetComponent<Rigidbody>();
+		playerShip = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject;
 
 		Debug.Log(playerShip.transform.position);
 
@@ -30,33 +35,60 @@ public class EnemyLadja : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		
 
 		Vector3 doPlayerja = new Vector3(
-			
+			playerShip.transform.position.x - rb.transform.position.x,
+			playerShip.transform.position.y - rb.transform.position.y,
+			playerShip.transform.position.z - rb.transform.position.z
 		);
+	
+		doPlayerja = normalizeVector(doPlayerja);
+		Vector3 fwd = normalizeVector(rb.transform.forward); 
+
+		Debug.Log(playerShip.transform.forward);
+		Debug.Log(rb.transform.forward);
+	
+		double rotationAngle = 
+			dotProduct(doPlayerja, fwd); 
+			
+        this.premakni();
 		
-
-		Vector3 premik = new Vector3();
-
-		
-
-        this.premakni(true);
-	    this.rotiraj(0.125f);
+		rotationAngle = -0.125;
+	    this.rotiraj(rotationAngle);
     }
 
-	// true = naprej, false = nazaj
-	public void premakni(bool naprej) {
-		if(vectorLength(rb.velocity) < velocity) {
-			rb.AddForce(rb.transform.forward);
+	public void premakni() {
+		Debug.Log(vectorLength(rb.velocity));
+		if(vectorLength(rb.velocity) < this.maxVelocity) {
+			rb.AddForce(rb.transform.forward * this.accelerationRate);
 		}
 	}
 
-	public void rotiraj(float rotationAngle) {
-		rb.transform.Rotate(0, rotationAngle, 0);
+	public void rotiraj(double rotationAngle) {
+		rb.transform.Rotate(0.0f, (float)rotationAngle, 0.0f);
+	}
+
+	public Vector3 normalizeVector(Vector3 v) {
+		double len = vectorLength(v);
+		return new Vector3(
+			v.x / (float) len,
+			v.y / (float) len,
+			v.z / (float) len
+		);
 	}
 
 	public double vectorLength(Vector3 v) {
-		return Math.Sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+		return v.x * v.x + v.y * v.y + v.z * v.z;
 	}	
-
+	
+	public double dotProduct(Vector3 a, Vector3 b) {
+		return a.x * b.x 
+			 + a.y * b.y
+			 + a.z * b.z;
+	}
 }
+
+
+
+

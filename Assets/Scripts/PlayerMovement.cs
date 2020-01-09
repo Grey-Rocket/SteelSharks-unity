@@ -45,6 +45,10 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		 if (Input.GetKey(KeyCode.Escape))
+		     Screen.lockCursor = false;
+		 else
+		     Screen.lockCursor = true;
 
         moveShip();
 
@@ -58,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         //rotation
         if (nextRotationShift < Time.time)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0 && rotationGear < 6)
+            if (Input.GetAxisRaw("Horizontal") > 0 && rotationGear < 4)
             {
                 rotationGear++;
                 nextRotationShift = Time.time + inputDelay;
