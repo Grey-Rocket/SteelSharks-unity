@@ -13,18 +13,23 @@ public class PlayerMovement : MonoBehaviour
     private float nextSpeedShift = -1;
 
     [SerializeField]
-    private int rotationGear = 3;
+    private int rotationGear = 2;
     private float nextRotationShift = -1;
 
     [SerializeField]
-    private float inputDelay = 0.75f;
+    private float inputDelay = 0.65f;
 
     [SerializeField]
     private float[] gearSpeeds = new float[] {-15f,-10f, 0f, 15f, 30f};
     private float moveSpeed = 2f;
 
     [SerializeField]
-    private float[] gearRotation = new float[] { -0.015f, -0.01f, -0.005f , 0, 0.005f, 0.01f, 0.015f };
+    private float[] gearRotation = new float[] { -0.015f, -0.01f , 0, 0.01f, 0.015f };
+
+    private float currentRotaionSpeed = 0f;
+
+    [SerializeField]
+    private float rotationGainSpeed = 0.0001f;
 
     // Start is called before the first frame update
     void Start()
@@ -65,7 +70,14 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        this.transform.Rotate(0,gearRotation[rotationGear] * parentRb.velocity.magnitude, 0);
+        if (currentRotaionSpeed < gearRotation[rotationGear]) {
+            currentRotaionSpeed += rotationGainSpeed;
+        }
+        else if (currentRotaionSpeed > gearRotation[rotationGear]) {
+            currentRotaionSpeed -= rotationGainSpeed;
+        }
+
+        this.transform.Rotate(0, currentRotaionSpeed * parentRb.velocity.magnitude, 0);
 
         //here be bugs
         //thisRb.AddTorque(new Vector3(0,2,0)) ;
@@ -85,11 +97,11 @@ public class PlayerMovement : MonoBehaviour
 
                 }
 
-                if (rotationGear > 3)
+                if (rotationGear > 2)
                 {
                     rotationGear--;
                 }
-                else if (rotationGear < 3)
+                else if (rotationGear < 2)
                 {
                     rotationGear++;
                 }
@@ -107,11 +119,11 @@ public class PlayerMovement : MonoBehaviour
 
                 nextSpeedShift = Time.time + inputDelay;
 
-                if (rotationGear > 3)
+                if (rotationGear > 2)
                 {
                     rotationGear--;
                 }
-                else if (rotationGear < 3)
+                else if (rotationGear < 2)
                 {
                     rotationGear++;
                 }
