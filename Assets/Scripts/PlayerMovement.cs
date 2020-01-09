@@ -13,18 +13,18 @@ public class PlayerMovement : MonoBehaviour
     private float nextSpeedShift = -1;
 
     [SerializeField]
-    private int rotationGear = 2;
+    private int rotationGear = 3;
     private float nextRotationShift = -1;
 
     [SerializeField]
-    private float inputDelay = 0.5f;
+    private float inputDelay = 0.75f;
 
     [SerializeField]
     private float[] gearSpeeds = new float[] {-15f,-10f, 0f, 15f, 30f};
     private float moveSpeed = 2f;
 
     [SerializeField]
-    private float[] gearRotation = new float[] { -0.2f, -0.1f , 0, 0.1f, 0.2f };
+    private float[] gearRotation = new float[] { -0.015f, -0.01f, -0.005f , 0, 0.005f, 0.01f, 0.015f };
 
     // Start is called before the first frame update
     void Start()
@@ -53,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
         //rotation
         if (nextRotationShift < Time.time)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0 && rotationGear < 4)
+            if (Input.GetAxisRaw("Horizontal") > 0 && rotationGear < 6)
             {
                 rotationGear++;
                 nextRotationShift = Time.time + inputDelay;
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        this.transform.Rotate(0,gearRotation[rotationGear],0);
+        this.transform.Rotate(0,gearRotation[rotationGear] * parentRb.velocity.magnitude, 0);
 
         //here be bugs
         //thisRb.AddTorque(new Vector3(0,2,0)) ;
@@ -77,17 +77,44 @@ public class PlayerMovement : MonoBehaviour
         //speed
         if (nextSpeedShift < Time.time)
         {
-            if (Input.GetAxisRaw("Vertical") > 0 && speedGear < 4)
+
+            if (Input.GetAxisRaw("Vertical") > 0)
             {
-                speedGear++;
+                if (speedGear < 4) {
+                    speedGear++;
+
+                }
+
+                if (rotationGear > 3)
+                {
+                    rotationGear--;
+                }
+                else if (rotationGear < 3)
+                {
+                    rotationGear++;
+                }
+                //Debug.Log(nextSpeedShift);
+
+                nextSpeedShift = Time.time + inputDelay;
+            }
+            
+            else if (Input.GetAxisRaw("Vertical") < 0)
+            {
+                if (speedGear > 0)
+                {
+                    speedGear--;
+                }
+
                 nextSpeedShift = Time.time + inputDelay;
 
-                //Debug.Log(nextSpeedShift);
-            }
-            else if (Input.GetAxisRaw("Vertical") < 0 && speedGear > 0)
-            {
-                speedGear--;
-                nextSpeedShift = Time.time + inputDelay;
+                if (rotationGear > 3)
+                {
+                    rotationGear--;
+                }
+                else if (rotationGear < 3)
+                {
+                    rotationGear++;
+                }
             }
         }
 
@@ -105,5 +132,6 @@ public class PlayerMovement : MonoBehaviour
             //under construction
             //thisRb.AddForce(-transform.forward * moveSpeed);
         }
+
     }
 }

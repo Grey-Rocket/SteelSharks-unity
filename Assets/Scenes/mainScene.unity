@@ -139,8 +139,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedGear: 2
-  rotationGear: 2
-  inputDelay: 0.5
+  rotationGear: 3
+  inputDelay: 0.75
   gearSpeeds:
   - -15
   - -10
@@ -148,11 +148,13 @@ MonoBehaviour:
   - 15
   - 30
   gearRotation:
-  - -0.2
-  - -0.1
+  - -0.015
+  - -0.01
+  - -0.005
   - 0
-  - 0.1
-  - 0.2
+  - 0.005
+  - 0.01
+  - 0.015
 --- !u!1001 &291591926
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -529,7 +531,7 @@ Rigidbody:
   m_GameObject: {fileID: 1158528030}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.2
+  m_Drag: 0.3
   m_AngularDrag: 0.01
   m_UseGravity: 0
   m_IsKinematic: 0
