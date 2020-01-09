@@ -9,10 +9,12 @@ public class CameraController : MonoBehaviour
 
     private Vector3 shipCenter;
 
+    public Vector3 targetPoint;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        targetPoint = calculatePoint();
     }
 
     // Update is called once per frame
@@ -34,5 +36,13 @@ public class CameraController : MonoBehaviour
         
 
         this.transform.LookAt(shipCenter);
+
+        targetPoint = calculatePoint();
+    }
+
+    private Vector3 calculatePoint()
+    {
+        Vector3 newDir = Quaternion.Euler(-20, 0, 0) * transform.forward;
+        return  newDir * 100;
     }
 }

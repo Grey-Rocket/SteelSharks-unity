@@ -20,8 +20,8 @@ public class PlayerMovement : MonoBehaviour
     private float inputDelay = 0.65f;
 
     [SerializeField]
-    private float[] gearSpeeds = new float[] {-15f,-10f, 0f, 15f, 30f};
-    private float moveSpeed = 2f;
+    private float[] gearSpeeds = new float[] {-10f,-5f, 0f, 10f, 15f};
+    private float[] moveSpeed = new float[] {  3f,1.5f, 2f, 3f, 5f};
 
     [SerializeField]
     private float[] gearRotation = new float[] { -0.015f, -0.01f , 0, 0.01f, 0.015f };
@@ -30,6 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField]
     private float rotationGainSpeed = 0.0001f;
+
+    private float shipsSpeed = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -46,11 +48,17 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
 
-        moveShip();
+        shipsSpeed = Vector3.Dot(transform.forward, parentRb.velocity);
+
+        Debug.Log(transform.forward + " vs " + parentRb.velocity + " ships speed " + shipsSpeed);
+
 
         turnShip();
+    }
 
-
+    private void FixedUpdate()
+    {
+        moveShip();
     }
 
     private void turnShip()
@@ -58,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
         //rotation
         if (nextRotationShift < Time.time)
         {
-            if (Input.GetAxisRaw("Horizontal") > 0 && rotationGear < 6)
+            if (Input.GetAxisRaw("Horizontal") > 0 && rotationGear < 4)
             {
                 rotationGear++;
                 nextRotationShift = Time.time + inputDelay;
@@ -77,7 +85,14 @@ public class PlayerMovement : MonoBehaviour
             currentRotaionSpeed -= rotationGainSpeed;
         }
 
-        this.transform.Rotate(0, currentRotaionSpeed * parentRb.velocity.magnitude, 0);
+        if (shipsSpeed > 0)
+        {
+            this.transform.Rotate(0, currentRotaionSpeed * parentRb.velocity.magnitude, 0);
+        }
+        else if (shipsSpeed < 0)
+        {
+            this.transform.Rotate(0, -currentRotaionSpeed * parentRb.velocity.magnitude, 0);
+        }
 
         //here be bugs
         //thisRb.AddTorque(new Vector3(0,2,0)) ;
@@ -130,16 +145,16 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        if (parentRb.velocity.z < gearSpeeds[speedGear])
+        if (shipsSpeed < gearSpeeds[speedGear])
         {
-            parentRb.AddForce(transform.forward * moveSpeed);
+            parentRb.AddForce(transform.forward * moveSpeed[speedGear]);
 
             //under construction
             //thisRb.AddForce(transform.forward * moveSpeed);
         }
-        else if (parentRb.velocity.z > gearSpeeds[speedGear])
+        else if (shipsSpeed > gearSpeeds[speedGear])
         {
-            parentRb.AddForce(-transform.forward * moveSpeed / 2);
+            parentRb.AddForce(transform.forward * (-moveSpeed[speedGear]/2));
             
             //under construction
             //thisRb.AddForce(-transform.forward * moveSpeed);
