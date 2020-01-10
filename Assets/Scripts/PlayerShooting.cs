@@ -8,9 +8,7 @@ public class PlayerShooting : MonoBehaviour
 	//private float time = Time.time;
 	
 	private Vector3 kannon;
-
 	private GameObject projectileHolder;
-	
 	private GameObject lucHolder;
 
 	public float projectileSpeed = 100f;
@@ -18,6 +16,8 @@ public class PlayerShooting : MonoBehaviour
 	public GameObject ballPrefab;
 	public GameObject lucPrefab;
 	
+	public float shootDelay = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {

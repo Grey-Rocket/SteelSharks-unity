@@ -9,14 +9,18 @@ public class BallDestroy : MonoBehaviour
 
 	private float creationTime;
 	private GameObject lucHolder;
+	private GameObject smokeHolder;
 
 	public Vector3 dir;
 	public GameObject lucPrefab;
+	public GameObject smokePrefab;
 
     // Start is called before the first frame update
     void Start()
     {
 		this.lucHolder = GameObject.Find("lucHolder");
+		this.smokeHolder = GameObject.Find("smokeHolder");
+
         this.creationTime = Time.time;
 		this.GetComponent<Rigidbody>().velocity = this.dir;
 		
@@ -26,8 +30,19 @@ public class BallDestroy : MonoBehaviour
 			this.transform.position.z + 5
 		);
 		
-		GameObject luc = Object.Instantiate(lucPrefab, lucPos, Quaternion.identity);
+		Vector3 lucDim = this.transform.position + Vector3.Normalize(this.dir) * 10;
+
+		// luc
+		GameObject luc = Object.Instantiate(lucPrefab, lucDim, Quaternion.identity);
 		luc.transform.SetParent(lucHolder.transform);
+
+		// dim
+		GameObject smok = Object.Instantiate(smokePrefab, lucDim, Quaternion.identity);
+		smok.transform.rotation = Quaternion.LookRotation(this.dir * 2, Vector3.right);
+		smok.transform.SetParent(smokeHolder.transform);
+		
+
+
     }
 
     // Update is called once per frame

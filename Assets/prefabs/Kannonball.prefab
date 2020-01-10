@@ -111,6 +111,8 @@ MonoBehaviour:
   dir: {x: 0, y: 0, z: 0}
   lucPrefab: {fileID: 9119000026404431476, guid: beb2bb5a0c75aade88274ab9dfa97bbe,
     type: 3}
+  smokePrefab: {fileID: 6293157634584906770, guid: 7d72d065788551249b490cd615303b42,
+    type: 3}
 --- !u!54 &-286720919575221339
 Rigidbody:
   m_ObjectHideFlags: 0
