@@ -10,7 +10,7 @@ public class TurretScript : MonoBehaviour
     public Transform otherTurret;
     public bool frontTurret;
 
-    [SerializeField]
+    //[SerializeField]
     private float rotationSpeed = 0.6f;
 
     public float rotationLimit = 130f;
@@ -19,8 +19,8 @@ public class TurretScript : MonoBehaviour
     private float currentKannonRaised = 0f;
     private float kannonRaiseUpLimit = 17f;
 
-    [SerializeField]
-    private float raisingSpeed = 0.2f;
+    //[SerializeField]
+    private float raisingSpeed = 0.15f;
 
     private Vector3 kannonToKannon;
 
@@ -41,7 +41,7 @@ public class TurretScript : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         rotateTurret();

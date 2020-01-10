@@ -15,9 +15,9 @@ public class CameraController : MonoBehaviour
 
     public TurretScript backTurret;
 
-    private float lowPoint = 2f;
+    private float lowPoint = 5f;
 
-    private float highPoint = 17f;
+    private float highPoint = 20f;
 
     // Start is called before the first frame update
     void Start()
@@ -59,10 +59,10 @@ public class CameraController : MonoBehaviour
         //Debug.Log(angle + " " + transform.position.y );
 
         frontTurret.targetPoint = targetPoint;
-        frontTurret.angle = angle - 2f;
+        frontTurret.angle = angle - 5f;
 
         backTurret.targetPoint = targetPoint;
-        backTurret.angle = angle;
+        backTurret.angle = angle -3 ;
     }
 
     private float calcAngle()

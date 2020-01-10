@@ -215,6 +215,11 @@ PrefabInstance:
       propertyPath: raisingSpeed
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 3126437818879017319, guid: 09419625ea90e2f478b96ae476784b2c,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 3517402265196325322, guid: 09419625ea90e2f478b96ae476784b2c,
         type: 3}
       propertyPath: frontTurret
@@ -223,6 +228,11 @@ PrefabInstance:
     - target: {fileID: 3517402265196325322, guid: 09419625ea90e2f478b96ae476784b2c,
         type: 3}
       propertyPath: raisingSpeed
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3517402265196325322, guid: 09419625ea90e2f478b96ae476784b2c,
+        type: 3}
+      propertyPath: rotationSpeed
       value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -444,7 +454,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 907105940}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.79, z: -30}
+  m_LocalPosition: {x: 0, y: 10.82, z: -43.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1158528031}

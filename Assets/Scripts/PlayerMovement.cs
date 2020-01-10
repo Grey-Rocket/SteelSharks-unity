@@ -52,17 +52,14 @@ public class PlayerMovement : MonoBehaviour
 		 else
 		     Screen.lockCursor = true;
 
-        shipsSpeed = Vector3.Dot(transform.forward, parentRb.velocity);
-
         //Debug.Log(transform.forward + " vs " + parentRb.velocity + " ships speed " + shipsSpeed);
-
-
-        turnShip();
     }
 
     private void FixedUpdate()
     {
         moveShip();
+        shipsSpeed = Vector3.Dot(transform.forward, parentRb.velocity);
+        turnShip();
     }
 
     private void turnShip()
