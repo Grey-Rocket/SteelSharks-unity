@@ -19,7 +19,7 @@ public class PlayerShooting : MonoBehaviour
 	public bool front;
 
 	public float shootDelay = 3.0f;
-	private float shootTime;
+	public float shootTime;
 	
 
     // Start is called before the first frame update

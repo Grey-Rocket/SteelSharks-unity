@@ -56,4 +56,18 @@ public class BallDestroy : MonoBehaviour
         if(Time.time - this.creationTime > this.lifeTime)
 			Destroy(gameObject);
     }
-}
+
+
+
+	void OnTriggerEnter(Collider other) {
+		if(other.tag == "EnemyLadja") {
+			other.GetComponent<EnemyLadja>().zniziLajf();
+			Destroy(gameObject);
+		}
+
+	} // trigger
+
+
+
+
+} // class
