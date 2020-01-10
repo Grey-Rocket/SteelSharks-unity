@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class UIHandler : MonoBehaviour
 {
@@ -23,13 +24,23 @@ public class UIHandler : MonoBehaviour
 
     public GameObject[] toClose;
 
+    public GameObject victory;
+    public GameObject defeat;
+
+    public GameObject restart;
+
     public bool gameActive = false;
 
     private PlayerMovement playerMovement;
 
+    public PlayerShooting firstTur;
+    public PlayerShooting secondTur;
+
     // Start is called before the first frame update
     void Start()
     {
+        firstTur = GameObject.FindWithTag("Player").transform.GetChild(0).GetChild(0).GetChild(0).GetChild(0).gameObject.GetComponent<PlayerShooting>();
+        secondTur = GameObject.FindWithTag("Player").transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).gameObject.GetComponent<PlayerShooting>();
         playerMovement = GameObject.FindWithTag("Player").transform.GetChild(0).GetComponent<PlayerMovement>();
     }
 
@@ -39,17 +50,24 @@ public class UIHandler : MonoBehaviour
         if (numOfTime < 0)
         {
             gameActive = false;
+            defeat.SetActive(true);
+            restart.SetActive(true);
             //loose
         }
 
         if (numOfShips <= 0)
         {
             gameActive = false;
+
+            victory.SetActive(true);
+            restart.SetActive(true);
             //display victory
         }
 
         if (gameActive)
         {
+            //Debug.Log(firstTur.KdajLahkoUstrelim() + " drugi: " + secondTur.KdajLahkoUstrelim());
+
             if (nextTime < 0)
             {
                 nextTime = Time.time + period;
@@ -60,6 +78,28 @@ public class UIHandler : MonoBehaviour
             rotationGear.text = "Rotation gear: " + (playerMovement.rotationGear - 2);
 
             timeRemaining.text = "Time remaining: " + numOfTime;
+
+            int prviTop = firstTur.KdajLahkoUstrelim();
+            int drugiTop = secondTur.KdajLahkoUstrelim();
+
+            if (prviTop > 0)
+            {
+                frontKannon.text = "Front Kannon: Reloading " + prviTop;
+            }
+            else
+            {
+                frontKannon.text = "Front Kannon: Can fire";
+            }
+
+            if (drugiTop > 0)
+            {
+                backKannon.text = "Back Kannon: Reloading " + prviTop;
+            }
+            else
+            {
+                backKannon.text = "Back Kannon: Can fire";
+            }
+
         }
 
         if (gameActive && nextTime < Time.time)
@@ -77,10 +117,16 @@ public class UIHandler : MonoBehaviour
 
     public void GotIt()
     {
+
         for (int i = 0; i < toClose.Length; i++)
         {
             toClose[i].SetActive(false);
         }
         gameActive = true;
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene("mainScene");
     }
 }

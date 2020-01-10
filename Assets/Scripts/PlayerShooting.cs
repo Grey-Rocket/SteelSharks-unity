@@ -24,9 +24,12 @@ public class PlayerShooting : MonoBehaviour
 	public float autoShootDelay = 0.2f;
 	private int toShoot = 0;
 
+    private UIHandler uiHandler;
+
     // Start is called before the first frame update
     void Start()
     {
+        uiHandler = GameObject.FindWithTag("GameController").GetComponent<UIHandler>();
         projectileHolder = GameObject.Find("projectileHolder");
 		lucHolder = GameObject.Find("lucHolder");
 
@@ -36,43 +39,52 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		
-		Debug.Log(this.KdajLahkoUstrelim());
+        if (uiHandler.gameActive)
+        {
+            //Debug.Log(this.KdajLahkoUstrelim());
 
-		if(this.front == true) {
-			
-			if(Input.GetButtonDown("Fire1")
-			&& Time.time - this.shootTime > this.shootDelay) {
-				
-				shoot(1);
-				this.shootTime = Time.time;
-				this.toShoot = 2;
-			}
+            if (this.front == true)
+            {
 
-		}
-		else {
-			if(Input.GetButtonDown("Fire2")
-			&& Time.time - this.shootTime > this.shootDelay) {
-				
-				shoot(1);
-				this.shootTime = Time.time;
-				this.toShoot = 2;
-			}
-		}
+                if (Input.GetButtonDown("Fire2")
+                && Time.time - this.shootTime > this.shootDelay)
+                {
 
-		
-		if(this.toShoot > 0) {
-			if(Time.time - this.shootTime > 2 * this.autoShootDelay) {
-				shoot(3);
-				this.toShoot--;
-			}
-			else if(Time.time - this.shootTime > this.autoShootDelay
-				 && this.toShoot == 2) {
-				shoot(2);
-				this.toShoot--;
-			}
+                    shoot(1);
+                    this.shootTime = Time.time;
+                    this.toShoot = 2;
+                }
 
-		}
+            }
+            else
+            {
+                if (Input.GetButtonDown("Fire1")
+                && Time.time - this.shootTime > this.shootDelay)
+                {
+
+                    shoot(1);
+                    this.shootTime = Time.time;
+                    this.toShoot = 2;
+                }
+            }
+
+
+            if (this.toShoot > 0)
+            {
+                if (Time.time - this.shootTime > 2 * this.autoShootDelay)
+                {
+                    shoot(3);
+                    this.toShoot--;
+                }
+                else if (Time.time - this.shootTime > this.autoShootDelay
+                     && this.toShoot == 2)
+                {
+                    shoot(2);
+                    this.toShoot--;
+                }
+
+            }
+        }
 
     }
 

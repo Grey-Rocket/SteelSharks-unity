@@ -20,32 +20,39 @@ public class EnemyLadja : MonoBehaviour
 
 	public int health = 3;
 
+    private UIHandler uiHandler;
+
     // Start is called before the first frame update
     void Start()
     {
-		rb = GetComponent<Rigidbody>();
+        uiHandler = GameObject.FindWithTag("GameController").GetComponent<UIHandler>();
+        rb = GetComponent<Rigidbody>();
 		playerShip = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject;
     }
 
     // Update is called once per frame
     void Update()
     {
-		Vector3 doPlayerja = new Vector3(
-			playerShip.transform.position.x - rb.transform.position.x,
-			playerShip.transform.position.y - rb.transform.position.y,
-			playerShip.transform.position.z - rb.transform.position.z
-		);
+        if (uiHandler.gameActive && health > 0)
+        {
+        
+		    Vector3 doPlayerja = new Vector3(
+			    playerShip.transform.position.x - rb.transform.position.x,
+			    playerShip.transform.position.y - rb.transform.position.y,
+			    playerShip.transform.position.z - rb.transform.position.z
+		    );
 	
-		doPlayerja  = normalizeVector(doPlayerja);
-		Vector3 fwd = normalizeVector(rb.transform.forward);
+		    doPlayerja  = normalizeVector(doPlayerja);
+		    Vector3 fwd = normalizeVector(rb.transform.forward);
 	
-		double rotationAngle = 
-			dotProduct(doPlayerja, fwd); 
+		    double rotationAngle = 
+			    dotProduct(doPlayerja, fwd); 
 			
-        this.premakni();
+            this.premakni();
 		
-		rotationAngle = -0.125;
-	    this.rotiraj(rotationAngle);
+		    rotationAngle = -0.125;
+	        this.rotiraj(rotationAngle);
+        }
     }
 
 	public void premakni() {
@@ -78,15 +85,26 @@ public class EnemyLadja : MonoBehaviour
 	}
 
 	public void zniziLajf() {
-		this.health--;
-		if(this.health <= 0) {
-			// sink
-			rb.useGravity = true;
-			rb.constraints = RigidbodyConstraints.None;
+        if (this.health > 0)
+        {
+            this.health--;
+            if (this.health <= 0)
+            {
+                // sink
+                rb.useGravity = true;
+                rb.constraints = RigidbodyConstraints.None;
 
-			
 
-		}
+                if (transform.childCount >= 3)
+                {
+                    Destroy(transform.GetChild(2).gameObject);
+                }
+
+                uiHandler.ShipKilled();
+
+            }
+
+        }
 
 	}
 }

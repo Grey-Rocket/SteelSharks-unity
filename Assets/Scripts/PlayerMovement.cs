@@ -50,11 +50,16 @@ public class PlayerMovement : MonoBehaviour
     {
         if (uiHandler.gameActive)
         {
+
             if (Input.GetKey(KeyCode.Escape))
                 Screen.lockCursor = false;
             else
                 Screen.lockCursor = true;
 
+        }
+        else
+        {
+            Screen.lockCursor = false;
         }
 
         //Debug.Log(transform.forward + " vs " + parentRb.velocity + " ships speed " + shipsSpeed);
@@ -62,9 +67,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        moveShip();
-        shipsSpeed = Vector3.Dot(transform.forward, parentRb.velocity);
-        turnShip();
+        if (uiHandler.gameActive)
+        {
+            moveShip();
+            shipsSpeed = Vector3.Dot(transform.forward, parentRb.velocity);
+            turnShip();
+        }
     }
 
     private void turnShip()

@@ -26,9 +26,12 @@ public class TurretScript : MonoBehaviour
 
     private Transform kannon;
 
+    private UIHandler uiHandler;
+
     // Start is called before the first frame update
     void Start()
     {
+        uiHandler = GameObject.FindWithTag("GameController").GetComponent<UIHandler>();
         kannon = transform.GetChild(0);
         if (frontTurret)
         {
@@ -43,11 +46,13 @@ public class TurretScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (uiHandler.gameActive)
+        {
+            rotateTurret();
+            raiseAndLower();
 
-        rotateTurret();
-        raiseAndLower();
+        }
     }
-
     private void raiseAndLower()
     {
 

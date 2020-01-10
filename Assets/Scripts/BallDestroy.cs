@@ -62,7 +62,8 @@ public class BallDestroy : MonoBehaviour
 	void OnTriggerEnter(Collider other) {
 		if(other.tag == "EnemyLadja") {
 			other.GetComponent<EnemyLadja>().zniziLajf();
-			Destroy(gameObject);
+			Destroy(gameObject.GetComponent<MeshCollider>());
+            Destroy(gameObject.GetComponent<MeshRenderer>());
 		}
 
 	} // trigger

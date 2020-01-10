@@ -19,9 +19,14 @@ public class CameraController : MonoBehaviour
 
     private float highPoint = 20f;
 
+    private UIHandler uiHandler;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        uiHandler = GameObject.FindWithTag("GameController").GetComponent<UIHandler>();
+
         frontTurret = transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<TurretScript>();
         backTurret = transform.parent.GetChild(0).GetChild(0).GetChild(1).GetComponent<TurretScript>();
 
@@ -35,34 +40,39 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        shipCenter = this.transform.parent.position;        
-        
-        this.transform.RotateAround(shipCenter, Vector3.up, rotSpeed* Input.GetAxis("Mouse X") * Time.deltaTime);
-        
-        this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, rotSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime);
-        
-        while (this.transform.position.y < lowPoint) {
-            this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left,  5* -Time.deltaTime);
+        if (uiHandler.gameActive)
+        {
+            shipCenter = this.transform.parent.position;
+
+            this.transform.RotateAround(shipCenter, Vector3.up, rotSpeed * Input.GetAxis("Mouse X") * Time.deltaTime);
+
+            this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, rotSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime);
+
+            while (this.transform.position.y < lowPoint)
+            {
+                this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, 5 * -Time.deltaTime);
+            }
+
+            while (this.transform.position.y > highPoint)
+            {
+                this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, 5 * Time.deltaTime);
+            }
+
+
+            this.transform.LookAt(shipCenter);
+
+            targetPoint = calculatePoint();
+
+
+            float angle = calcAngle();
+            //Debug.Log(angle + " " + transform.position.y );
+
+            frontTurret.targetPoint = targetPoint;
+            frontTurret.angle = angle - 5f;
+
+            backTurret.targetPoint = targetPoint;
+            backTurret.angle = angle - 3;
         }
-
-        while (this.transform.position.y > highPoint) {
-            this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, 5 * Time.deltaTime);
-        }
-        
-
-        this.transform.LookAt(shipCenter);
-
-        targetPoint = calculatePoint();
-
-        
-        float angle = calcAngle();
-        //Debug.Log(angle + " " + transform.position.y );
-
-        frontTurret.targetPoint = targetPoint;
-        frontTurret.angle = angle - 5f;
-
-        backTurret.targetPoint = targetPoint;
-        backTurret.angle = angle -3 ;
     }
 
     private float calcAngle()
