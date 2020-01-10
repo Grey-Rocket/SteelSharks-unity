@@ -178,6 +178,7 @@ MonoBehaviour:
     type: 3}
   lucPrefab: {fileID: 9119000026404431476, guid: beb2bb5a0c75aade88274ab9dfa97bbe,
     type: 3}
+  shootDelay: 2
 --- !u!1001 &291591926
 PrefabInstance:
   m_ObjectHideFlags: 0

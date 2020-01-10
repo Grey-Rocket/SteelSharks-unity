@@ -15,6 +15,9 @@ public class BallDestroy : MonoBehaviour
 	public GameObject lucPrefab;
 	public GameObject smokePrefab;
 
+	public AudioClip MusicClip;
+	public AudioSource MusicSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -41,7 +44,9 @@ public class BallDestroy : MonoBehaviour
 		smok.transform.rotation = Quaternion.LookRotation(this.dir * 2, Vector3.right);
 		smok.transform.SetParent(smokeHolder.transform);
 		
-
+		MusicSource = GetComponent<AudioSource>();
+		MusicSource.clip = MusicClip;
+		MusicSource.Play();
 
     }
 
