@@ -56,19 +56,15 @@ public class PlayerShooting : MonoBehaviour
 			this.transform.position.y + 5,
 			this.transform.position.z + 5
 		);
-		GameObject luc1 = Object.Instantiate(lucPrefab, luc1Pos, Quaternion.identity);
+
+
+        GameObject luc1 = Object.Instantiate(lucPrefab, luc1Pos, Quaternion.identity);
 		luc1.transform.SetParent(lucHolder.transform);
 	
-
-
-
 		// pos2 = position topa (center position)
 		GameObject instance2 = Object.Instantiate(ballPrefab, this.transform.position, Quaternion.identity);
 		instance2.GetComponent<BallDestroy>().dir = this.kannon * this.projectileSpeed;
 		instance2.transform.SetParent(projectileHolder.transform);
-
-
-
 
 		
 		Vector3 pos3 = new Vector3(
