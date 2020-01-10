@@ -36,6 +36,9 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+		
+		Debug.Log(this.KdajLahkoUstrelim());
+
 		if(this.front == true) {
 			
 			if(Input.GetButtonDown("Fire1")
@@ -108,6 +111,8 @@ public class PlayerShooting : MonoBehaviour
 		}
 	} // shoot
 
-
+	public int KdajLahkoUstrelim() {
+		return (int)Mathf.Max(0, Mathf.Round(this.shootDelay - (Time.time - this.shootTime)));
+	}
 
 } // class

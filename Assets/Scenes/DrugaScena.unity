@@ -256,6 +256,7 @@ MonoBehaviour:
   - 0.01
   - 0.015
   rotationGainSpeed: 0.0001
+  shipsSpeed: 0
 --- !u!1 &244764420 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1641331845821596, guid: 09419625ea90e2f478b96ae476784b2c,
@@ -282,6 +283,7 @@ MonoBehaviour:
   front: 1
   shootDelay: 3
   shootTime: 0
+  autoShootDelay: 0.2
 --- !u!1 &263723623 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1762342275173686, guid: 09419625ea90e2f478b96ae476784b2c,
@@ -306,8 +308,9 @@ MonoBehaviour:
   lucPrefab: {fileID: 9119000026404431476, guid: beb2bb5a0c75aade88274ab9dfa97bbe,
     type: 3}
   front: 0
-  shootDelay: 2
+  shootDelay: 3
   shootTime: 0
+  autoShootDelay: 0.2
 --- !u!1001 &291591926
 PrefabInstance:
   m_ObjectHideFlags: 0
