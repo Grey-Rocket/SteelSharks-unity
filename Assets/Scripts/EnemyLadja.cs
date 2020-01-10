@@ -18,6 +18,8 @@ public class EnemyLadja : MonoBehaviour
 
 	public GameObject playerShip;
 
+	public int health = 3;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -73,6 +75,20 @@ public class EnemyLadja : MonoBehaviour
 		return a.x * b.x 
 			 + a.y * b.y
 			 + a.z * b.z;
+	}
+
+	public void zniziLajf() {
+		this.health--;
+		
+		Debug.Log(this.health);
+
+		if(this.health <= 0) {
+			// sink
+			rb.useGravity = true;
+			rb.constraints = RigidbodyConstraints.None;
+			Debug.Log("SINKEedD");
+		}
+
 	}
 }
 
