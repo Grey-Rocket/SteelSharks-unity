@@ -5,7 +5,6 @@ using System;
 
 public class EnemyLadja : MonoBehaviour
 {
-
 	public Rigidbody rb;
 
 	[SerializeField]
@@ -17,7 +16,6 @@ public class EnemyLadja : MonoBehaviour
 	[SerializeField]
 	public float accelerationRate = 3.0f;
 
-
 	public GameObject playerShip;
 
     // Start is called before the first frame update
@@ -25,29 +23,19 @@ public class EnemyLadja : MonoBehaviour
     {
 		rb = GetComponent<Rigidbody>();
 		playerShip = GameObject.FindWithTag("Player").transform.GetChild(0).gameObject;
-
-		Debug.Log(playerShip.transform.position);
-
-		Debug.Log(rb.transform.position);
-
     }
 
     // Update is called once per frame
     void Update()
     {
-		
-
 		Vector3 doPlayerja = new Vector3(
 			playerShip.transform.position.x - rb.transform.position.x,
 			playerShip.transform.position.y - rb.transform.position.y,
 			playerShip.transform.position.z - rb.transform.position.z
 		);
 	
-		doPlayerja = normalizeVector(doPlayerja);
-		Vector3 fwd = normalizeVector(rb.transform.forward); 
-
-		Debug.Log(playerShip.transform.forward);
-		Debug.Log(rb.transform.forward);
+		doPlayerja  = normalizeVector(doPlayerja);
+		Vector3 fwd = normalizeVector(rb.transform.forward);
 	
 		double rotationAngle = 
 			dotProduct(doPlayerja, fwd); 
@@ -59,7 +47,6 @@ public class EnemyLadja : MonoBehaviour
     }
 
 	public void premakni() {
-		Debug.Log(vectorLength(rb.velocity));
 		if(vectorLength(rb.velocity) < this.maxVelocity) {
 			rb.AddForce(rb.transform.forward * this.accelerationRate);
 		}
