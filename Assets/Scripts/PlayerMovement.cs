@@ -31,10 +31,13 @@ public class PlayerMovement : MonoBehaviour
 
     public float shipsSpeed = 0f;
 
+    public UIHandler uiHandler;
+
     // Start is called before the first frame update
     void Start()
     {
 
+        uiHandler = GameObject.FindWithTag("GameController").GetComponent<UIHandler>();
         parentRb = transform.parent.GetComponent<Rigidbody>();
 
         //here be bugs
@@ -45,10 +48,14 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		 if (Input.GetKey(KeyCode.Escape))
-		     Screen.lockCursor = false;
-		 else
-		     Screen.lockCursor = true;
+        if (uiHandler.gameActive)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+                Screen.lockCursor = false;
+            else
+                Screen.lockCursor = true;
+
+        }
 
         //Debug.Log(transform.forward + " vs " + parentRb.velocity + " ships speed " + shipsSpeed);
     }

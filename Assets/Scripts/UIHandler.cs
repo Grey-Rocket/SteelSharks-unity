@@ -12,6 +12,14 @@ public class UIHandler : MonoBehaviour
 
     public TextMeshProUGUI frontKannon;
     public TextMeshProUGUI backKannon;
+    public TextMeshProUGUI shipsRemaining;
+    public TextMeshProUGUI timeRemaining;
+
+    private int numOfTime = 240;
+    private int numOfShips = 6;
+
+    private float nextTime = -1.0f;
+    private float period = 1f;
 
     public GameObject[] toClose;
 
@@ -22,18 +30,49 @@ public class UIHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerMovement = GameObject.FindWithTag("Player").transform.GetChild(0).GetComponent<PlayerMovement>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (numOfTime < 0)
+        {
+            gameActive = false;
+            //loose
+        }
+
+        if (numOfShips <= 0)
+        {
+            gameActive = false;
+            //display victory
+        }
+
         if (gameActive)
         {
-            velocity.text = "Velocity: " + playerMovement.shipsSpeed;
+            if (nextTime < 0)
+            {
+                nextTime = Time.time + period;
+            }
+
+            velocity.text = "Velocity: " + Mathf.RoundToInt(playerMovement.shipsSpeed);
             speedGear.text = "Speed gear: " + (playerMovement.speedGear - 2);
             rotationGear.text = "Rotation gear: " + (playerMovement.rotationGear - 2);
+
+            timeRemaining.text = "Time remaining: " + numOfTime;
         }
+
+        if (gameActive && nextTime < Time.time)
+        {
+            nextTime = Time.time + period;
+            numOfTime--;
+        }
+    }
+
+    public void ShipKilled()
+    {
+        numOfShips--;
+        shipsRemaining.text = "Ships remaining: " + numOfShips;
     }
 
     public void GotIt()
