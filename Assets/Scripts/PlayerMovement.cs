@@ -8,12 +8,10 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody thisRb;
 
-    [SerializeField]
-    private int speedGear = 2;
+    public int speedGear = 2;
     private float nextSpeedShift = -1;
 
-    [SerializeField]
-    private int rotationGear = 2;
+    public int rotationGear = 2;
     private float nextRotationShift = -1;
 
     [SerializeField]
@@ -31,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float rotationGainSpeed = 0.0001f;
 
-    private float shipsSpeed = 0f;
+    public float shipsSpeed = 0f;
 
     // Start is called before the first frame update
     void Start()
