@@ -16,7 +16,7 @@ public class PlayerShooting : MonoBehaviour
 	public GameObject ballPrefab;
 	public GameObject lucPrefab;
 	
-
+	public bool front;
 
 	public float shootDelay = 3.0f;
 	private float shootTime;
@@ -34,12 +34,26 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if(Input.GetButtonDown("Fire1")
-		&& Time.time - this.shootTime > this.shootDelay) {
-		
-			this.shootTime = Time.time;
-			shoot();
+		if(this.front == true) {
+			
+			if(Input.GetButtonDown("Fire1")
+			&& Time.time - this.shootTime > this.shootDelay) {
+			
+				this.shootTime = Time.time;
+				shoot();
+			}
+
 		}
+		else {
+			if(Input.GetButtonDown("Fire2")
+			&& Time.time - this.shootTime > this.shootDelay) {
+			
+				this.shootTime = Time.time;
+				shoot();
+			}
+		}
+
+
 
     }
 
