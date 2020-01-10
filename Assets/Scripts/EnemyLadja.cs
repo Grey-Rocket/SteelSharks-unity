@@ -79,14 +79,13 @@ public class EnemyLadja : MonoBehaviour
 
 	public void zniziLajf() {
 		this.health--;
-		
-		Debug.Log(this.health);
-
 		if(this.health <= 0) {
 			// sink
 			rb.useGravity = true;
 			rb.constraints = RigidbodyConstraints.None;
-			Debug.Log("SINKEedD");
+
+			
+
 		}
 
 	}
