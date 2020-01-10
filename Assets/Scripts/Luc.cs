@@ -5,7 +5,7 @@ using UnityEngine;
 public class Luc : MonoBehaviour
 {
 
-	public float lifeTime = 0.2f;
+	public float lifeTime = 0.1f;
 	private float creationTime;
 
     // Start is called before the first frame update
