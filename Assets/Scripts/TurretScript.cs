@@ -4,166 +4,125 @@ using UnityEngine;
 
 public class TurretScript : MonoBehaviour
 {
-    private CameraController  playerCameraScript;
+    public Vector3 targetPoint;
+    public float angle;
 
-    private GameObject turretFront;
-    private GameObject turretBack;
-
-    private Vector3 targetPoint;
+    public Transform otherTurret;
+    public bool frontTurret;
 
     [SerializeField]
     private float rotationSpeed = 0.6f;
 
-    [SerializeField]
-    private float frontRotationLimit = 130;
-    private float frontRotation = 0;
+    public float rotationLimit = 130f;
+
+    private float kannonRaiseDownLimit = 0f;
+    private float currentKannonRaised = 0f;
+    private float kannonRaiseUpLimit = 17f;
 
     [SerializeField]
-    private float backRotationLimit = 140;
-    private float backRotation = 0;
+    private float raisingSpeed = 0.2f;
 
-    //private float 
+    private Vector3 kannonToKannon;
+
+    private Transform kannon;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerCameraScript = GameObject.FindGameObjectWithTag("Player").transform.GetChild(1).gameObject.GetComponent<CameraController>(); ;
-        turretFront = transform.GetChild(0).GetChild(0).gameObject;
-
-        turretBack = transform.GetChild(0).GetChild(1).gameObject;
+        kannon = transform.GetChild(0);
+        if (frontTurret)
+        {
+            otherTurret = transform.parent.GetChild(1);
+        }
+        else
+        {
+            otherTurret = transform.parent.GetChild(0);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        targetPoint = playerCameraScript.targetPoint;
 
-        //turretFront.transform.LookAt(new Vector3(targetPoint.x, 0, targetPoint.z));
-        //turretBack.transform.LookAt(new Vector3(targetPoint.x, 0, targetPoint.z));
-
-        turnTurret(turretFront, "front");
-        turnTurret(turretBack, "back");
+        rotateTurret();
+        raiseAndLower();
     }
 
+    private void raiseAndLower()
+    {
 
-    private void turnTurret(GameObject turret, string turretName)
+        if (angle > currentKannonRaised && currentKannonRaised < kannonRaiseUpLimit)
+        {
+            currentKannonRaised += raisingSpeed;
+            kannon.Rotate(-raisingSpeed, 0, 0);
+        }
+        else if (angle < currentKannonRaised && currentKannonRaised > kannonRaiseDownLimit)
+        {
+            currentKannonRaised -= raisingSpeed;
+            kannon.Rotate(raisingSpeed, 0, 0);
+        }
+
+    }
+
+    private void rotateTurret()
     {
 
         Vector3 directionVect = new Vector3(
-            targetPoint.x - turret.transform.position.x,
+            targetPoint.x - this.transform.position.x,
             0,
-            targetPoint.z - turret.transform.position.z);
+            targetPoint.z - this.transform.position.z);
 
-        float angle = Vector3.Angle(turret.transform.forward, directionVect);
+        kannonToKannon = new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(otherTurret.position.x, 0, otherTurret.position.z);
 
-        float sideOfShip = Vector3.Cross(this.transform.forward, directionVect).y;
-        float sideOfTurret = Vector3.Cross(turret.transform.forward, directionVect).y;
-        float turretAndShip = Vector3.Cross(this.transform.forward, turret.transform.forward).y;
+        //this is for checking how far 
+        float angleToTurret = Vector3.Angle(transform.forward, directionVect);
 
-        switch (turretName)
+        float sideOfShip = Vector3.Cross(kannonToKannon, directionVect).y;
+        float sideOfTurret = Vector3.Cross(transform.forward, directionVect).y;
+        float turretAndShip = Vector3.Cross(kannonToKannon, transform.forward).y;
+
+        //this is needed to check constraints
+        float angShipTur = Vector3.Angle(kannonToKannon, transform.forward);
+
+        if (angleToTurret > 1)
         {
-            case ("front"):
+            if (sideOfShip > 0)
+            {
 
-                if (angle > 1)
+                if (turretAndShip >= 0)
                 {
-                    if (sideOfShip > 0)
+                    if (sideOfTurret >= 0 && angShipTur < rotationLimit)
                     {
-                        if (turretAndShip >= 0)
-                        {
-                            if (sideOfTurret < 0 && frontRotation > -frontRotationLimit)
-                            {
-                                frontRotation -= rotationSpeed;
-                                turret.transform.Rotate(0, -rotationSpeed, 0);
-                            }
-                            else if (sideOfTurret > 0 && frontRotation < frontRotationLimit)
-                            {
-                                frontRotation += rotationSpeed;
-                                turret.transform.Rotate(0, rotationSpeed, 0);
-                            }
-                        }
-                        else
-                        {
-                            frontRotation += rotationSpeed;
-                            turret.transform.Rotate(0, rotationSpeed, 0);
-                        }
+                        transform.Rotate(0, rotationSpeed, 0);
                     }
-
-                    else if (sideOfShip < 0)
+                    else if (sideOfTurret < 0)
                     {
-                        if (turretAndShip <= 0) {
-                            if (sideOfTurret > 0 && frontRotation < frontRotationLimit)
-                            {
-                                frontRotation += rotationSpeed;
-                                turret.transform.Rotate(0, rotationSpeed, 0);
-                            }
-                            else if (sideOfTurret < 0 && frontRotation > -frontRotationLimit)
-                            {
-                                frontRotation -= rotationSpeed;
-                                turret.transform.Rotate(0, -rotationSpeed, 0);
-                            }
-                        }
-                        else
-                        {
-                            frontRotation -= rotationSpeed;
-                            turret.transform.Rotate(0, -rotationSpeed, 0);
-                        }
+                        transform.Rotate(0, -rotationSpeed, 0);
                     }
                 }
-
-                break;
-
-            case ("back"):
-
-                if (angle > 1)
+                else if (turretAndShip < 0)
                 {
-                    if (sideOfShip > 0)
+                    transform.Rotate(0, rotationSpeed, 0);
+                }
+            }
+            else if (sideOfShip < 0)
+            {
+                if (turretAndShip <= 0)
+                {
+                    if (sideOfTurret <= 0 && angShipTur < rotationLimit)
                     {
-                        if (turretAndShip >= 0)
-                        {
-                            if (sideOfTurret < 0 && backRotation > -backRotationLimit)
-                            {
-                                backRotation -= rotationSpeed;
-                                turret.transform.Rotate(0, -rotationSpeed, 0);
-                            }
-                            else if (sideOfTurret > 0 && backRotation < backRotationLimit)
-                            {
-                                backRotation = rotationSpeed;
-                                turret.transform.Rotate(0, rotationSpeed, 0);
-                            }
-
-                        }
-                        else
-                        {
-                            backRotation -= rotationSpeed;
-                            turret.transform.Rotate(0, -rotationSpeed, 0);
-                        }
+                        transform.Rotate(0, -rotationSpeed, 0);
                     }
-
-                    else if (sideOfShip < 0)
+                    else if (sideOfTurret > 0)
                     {
-                        if (turretAndShip <= 0)
-                        {
-                            if (sideOfTurret > 0 && backRotation < backRotationLimit)
-                            {
-                                backRotation += rotationSpeed;
-                                turret.transform.Rotate(0, rotationSpeed, 0);
-                            }
-                            else if (sideOfTurret < 0 && backRotation > -backRotationLimit)
-                            {
-                                backRotation -= rotationSpeed;
-                                turret.transform.Rotate(0, -rotationSpeed, 0);
-                            }
-                        }
-                        else
-                        {
-                            backRotation += rotationSpeed;
-                            turret.transform.Rotate(0, rotationSpeed, 0);
-                        }
-
+                        transform.Rotate(0, rotationSpeed, 0);
                     }
                 }
-         break;
+                else if (turretAndShip > 0)
+                {
+                    transform.Rotate(0, -rotationSpeed, 0);
+                }
+            }
         }
     }
-
 }

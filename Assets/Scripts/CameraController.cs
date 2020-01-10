@@ -11,11 +11,26 @@ public class CameraController : MonoBehaviour
 
     public Vector3 targetPoint;
 
+    public TurretScript frontTurret;
+
+    public TurretScript backTurret;
+
+    private float lowPoint = 2f;
+
+    private float highPoint = 17f;
+
     // Start is called before the first frame update
     void Start()
     {
+        frontTurret = transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<TurretScript>();
+        backTurret = transform.parent.GetChild(0).GetChild(0).GetChild(1).GetComponent<TurretScript>();
+
         targetPoint = calculatePoint();
+
+        frontTurret.targetPoint = targetPoint;
+        backTurret.targetPoint = targetPoint;
     }
+
 
     // Update is called once per frame
     void LateUpdate()
@@ -26,11 +41,11 @@ public class CameraController : MonoBehaviour
         
         this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, rotSpeed * Input.GetAxis("Mouse Y") * Time.deltaTime);
         
-        while (this.transform.position.y < 2f) {
+        while (this.transform.position.y < lowPoint) {
             this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left,  5* -Time.deltaTime);
         }
 
-        while (this.transform.position.y > 17f) {
+        while (this.transform.position.y > highPoint) {
             this.transform.RotateAround(shipCenter, transform.rotation * Vector3.left, 5 * Time.deltaTime);
         }
         
@@ -38,11 +53,26 @@ public class CameraController : MonoBehaviour
         this.transform.LookAt(shipCenter);
 
         targetPoint = calculatePoint();
+
+        
+        float angle = calcAngle();
+        //Debug.Log(angle + " " + transform.position.y );
+
+        frontTurret.targetPoint = targetPoint;
+        frontTurret.angle = angle - 2f;
+
+        backTurret.targetPoint = targetPoint;
+        backTurret.angle = angle;
+    }
+
+    private float calcAngle()
+    { 
+        return (transform.position.y- highPoint) /(0f-highPoint) * (20f - lowPoint) + lowPoint;
     }
 
     private Vector3 calculatePoint()
     {
-        Vector3 newDir = Quaternion.Euler(-20, 0, 0) * transform.forward;
-        return  newDir * 100;
+        return (transform.position + transform.forward * 100);
+        
     }
 }

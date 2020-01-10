@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33318028294671690}
   - component: {fileID: 23296002907487268}
   - component: {fileID: 65252156427083896}
+  - component: {fileID: 3126437818879017319}
   m_Layer: 0
   m_Name: Small Turret
   m_TagString: Untagged
@@ -94,6 +95,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.25, y: 1, z: 4}
   m_Center: {x: -0.0000010728836, y: 0.57, z: -0.23933113}
+--- !u!114 &3126437818879017319
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1246362233793768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4196c1c268661b448b58536ee56eead3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
+  otherTurret: {fileID: 0}
+  frontTurret: 0
+  rotationSpeed: 0.6
+  rotationLimit: 130
 --- !u!1 &1250201171931244
 GameObject:
   m_ObjectHideFlags: 0
@@ -237,6 +255,7 @@ GameObject:
   - component: {fileID: 33291162780752584}
   - component: {fileID: 23604865969555114}
   - component: {fileID: 65751940074335644}
+  - component: {fileID: 3517402265196325322}
   m_Layer: 0
   m_Name: Small Turret
   m_TagString: Untagged
@@ -319,6 +338,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.25, y: 1, z: 4}
   m_Center: {x: -0.0000010728836, y: 0.57, z: -0.23933113}
+--- !u!114 &3517402265196325322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345887407032708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4196c1c268661b448b58536ee56eead3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPoint: {x: 0, y: 0, z: 0}
+  otherTurret: {fileID: 0}
+  frontTurret: 1
+  rotationSpeed: 0.6
+  rotationLimit: 130
 --- !u!1 &1376123167255182
 GameObject:
   m_ObjectHideFlags: 0
