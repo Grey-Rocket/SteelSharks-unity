@@ -54,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
 
         shipsSpeed = Vector3.Dot(transform.forward, parentRb.velocity);
 
-        Debug.Log(transform.forward + " vs " + parentRb.velocity + " ships speed " + shipsSpeed);
+        //Debug.Log(transform.forward + " vs " + parentRb.velocity + " ships speed " + shipsSpeed);
 
 
         turnShip();
