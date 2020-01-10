@@ -104,8 +104,8 @@ public class IslandGenerator : MonoBehaviour {
     {
         terrain = GetComponent<Terrain>();
 
-        int mapHeight = terrain.terrainData.heightmapHeight;
-        int mapWidth = terrain.terrainData.heightmapWidth;
+        int mapHeight = terrain.terrainData.heightmapResolution;
+        int mapWidth = terrain.terrainData.heightmapResolution;
 
         //Let's figure out how many times we need to shrink/grow our map
         //for the cellular automata to work. 64*64 seems to be the best resolution.
@@ -115,8 +115,8 @@ public class IslandGenerator : MonoBehaviour {
         height = mapHeight / scaleHeightMultip;
         width = mapWidth / scaleWidthMultip;
 
-        heights = new float[terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapHeight];
-        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapWidth);
+        heights = new float[terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution];
+        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
 
         GenerateMap();
     }
@@ -158,7 +158,7 @@ public class IslandGenerator : MonoBehaviour {
     {
         terrain = GetComponent<Terrain>();
 
-        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapWidth);
+        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
         bool hitFloor = false;
 
         //Even if we hit 0 at some point, the function runs until the end of the map,
@@ -167,9 +167,9 @@ public class IslandGenerator : MonoBehaviour {
         //point is equally lowered.
         while (!hitFloor)
         {
-            for (int x = 0; x < terrain.terrainData.heightmapWidth; x++)
+            for (int x = 0; x < terrain.terrainData.heightmapResolution; x++)
             {
-                for (int y = 0; y < terrain.terrainData.heightmapHeight; y++)
+                for (int y = 0; y < terrain.terrainData.heightmapResolution; y++)
                 {
                     heights2[x, y] -= 0.001f;
                     if (heights2[x, y] <= 0)
@@ -189,8 +189,8 @@ public class IslandGenerator : MonoBehaviour {
 	{
         terrain = GetComponent<Terrain>();
 
-        int hMapWidth = terrain.terrainData.heightmapWidth;
-        int hMapHeight = terrain.terrainData.heightmapHeight;
+        int hMapWidth = terrain.terrainData.heightmapResolution;
+        int hMapHeight = terrain.terrainData.heightmapResolution;
 
         heights2 = terrain.terrainData.GetHeights(0, 0, hMapWidth, hMapHeight);
 
@@ -286,8 +286,8 @@ public class IslandGenerator : MonoBehaviour {
     {
         terrain = GetComponent<Terrain>();
 
-        int cHeight = terrain.terrainData.heightmapWidth;
-        int cWidth = terrain.terrainData.heightmapHeight;
+        int cHeight = terrain.terrainData.heightmapResolution;
+        int cWidth = terrain.terrainData.heightmapResolution;
 
         float[,] originalMap = terrain.terrainData.GetHeights(0, 0, cWidth, cHeight);
 
@@ -314,9 +314,9 @@ public class IslandGenerator : MonoBehaviour {
     /// </summary>
     void Flatten()
     {
-        for (int i = 0; i < terrain.terrainData.heightmapWidth; i++)
+        for (int i = 0; i < terrain.terrainData.heightmapResolution; i++)
         {
-            for (int k = 0; k < terrain.terrainData.heightmapHeight; k++)
+            for (int k = 0; k < terrain.terrainData.heightmapResolution; k++)
             {
                 heights[i, k] = 0;
             }
@@ -430,7 +430,7 @@ public class IslandGenerator : MonoBehaviour {
         }
 
         terrain.terrainData.SetHeights(0, 0, heights);
-        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapWidth);
+        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
 
     }
 
@@ -451,8 +451,8 @@ public class IslandGenerator : MonoBehaviour {
         gridSize = scaledHeight * scaledWidth;
         calculatedPixels = 0;
 
-        terrainDataMapHeight = terrain.terrainData.heightmapHeight;
-        terrainDataMapWidth = terrain.terrainData.heightmapWidth;
+        terrainDataMapHeight = terrain.terrainData.heightmapResolution;
+        terrainDataMapWidth = terrain.terrainData.heightmapResolution;
 
         th1 = new Thread(Thread1);
 
@@ -467,7 +467,7 @@ public class IslandGenerator : MonoBehaviour {
     {
         terrain = GetComponent<Terrain>();
         terrain.terrainData.SetHeights(0, 0, heights);
-        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapWidth, terrain.terrainData.heightmapWidth);
+        heights2 = terrain.terrainData.GetHeights(0, 0, terrain.terrainData.heightmapResolution, terrain.terrainData.heightmapResolution);
     }
 
     /// <summary>

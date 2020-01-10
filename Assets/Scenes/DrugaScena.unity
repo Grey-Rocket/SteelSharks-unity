@@ -173,8 +173,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e66396b114e43a55972b20593c605f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 1000
+  projectileSpeed: 150
   ballPrefab: {fileID: 5414390791288110080, guid: 5b25f7e4a8986a4a2b3994999ec17257,
+    type: 3}
+  lucPrefab: {fileID: 9119000026404431476, guid: beb2bb5a0c75aade88274ab9dfa97bbe,
     type: 3}
 --- !u!1001 &291591926
 PrefabInstance:
@@ -653,6 +655,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotSpeed: 100
   targetPoint: {x: 0, y: 0, z: 0}
+  frontTurret: {fileID: 0}
+  backTurret: {fileID: 0}
 --- !u!114 &907105945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,7 +730,7 @@ Rigidbody:
   m_GameObject: {fileID: 1158528030}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.2
+  m_Drag: 0.3
   m_AngularDrag: 0.01
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -772,6 +776,36 @@ MonoBehaviour:
   turnRate: 1
   accelerationRate: 3
   playerShip: {fileID: 0}
+--- !u!1 &1362351406
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1362351407}
+  m_Layer: 0
+  m_Name: lucHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1362351407
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362351406}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.59858924, y: 143.38362, z: -26.093006}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1582376825
 GameObject:
   m_ObjectHideFlags: 0
