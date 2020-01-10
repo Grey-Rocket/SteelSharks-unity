@@ -18,7 +18,7 @@ public class EnemyLadja : MonoBehaviour
 
 	public GameObject playerShip;
 
-	public int health = 5;
+	public int health = 3;
 
     // Start is called before the first frame update
     void Start()
