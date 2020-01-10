@@ -140,20 +140,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedGear: 2
-  rotationGear: 3
-  inputDelay: 0.75
+  rotationGear: 2
+  inputDelay: 0.65
   gearSpeeds:
-  - -15
   - -10
+  - -5
   - 0
+  - 10
   - 15
-  - 30
   gearRotation:
   - -0.015
   - -0.01
-  - -0.005
   - 0
-  - 0.005
   - 0.01
   - 0.015
   rotationGainSpeed: 0.0001
@@ -733,7 +731,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!1 &1174207884 stripped
 GameObject:
